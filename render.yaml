@@ -18,6 +18,10 @@ services:
         sync: false
       - key: APP_DEBUG
         value: "false"
+      - key: RECAPTCHA_SITE_KEY
+        sync: false
+      - key: RECAPTCHA_SECRET_KEY
+        sync: false
       - key: DB_CONNECTION
         value: pgsql
       - key: DATABASE_URL
