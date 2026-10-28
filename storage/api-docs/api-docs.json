@@ -1,0 +1,234 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "ProductosPro Laravel API",
+        "description": "Documentación de la API para el proyecto integrador ProductosPro Laravel (Sprint 3)",
+        "contact": {
+            "email": "soporte@productospro.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://my-default-host.com",
+            "description": "Servidor Principal"
+        }
+    ],
+    "paths": {
+        "/cart": {
+            "get": {
+                "tags": [
+                    "Carrito"
+                ],
+                "summary": "Ver el contenido del carrito",
+                "operationId": "294e093bf29c111c01d8402121fb4f43",
+                "responses": {
+                    "200": {
+                        "description": "Contenido del carrito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "cart": {
+                                            "type": "object"
+                                        },
+                                        "total": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cart/add/{product}": {
+            "post": {
+                "tags": [
+                    "Carrito"
+                ],
+                "summary": "Añadir un producto al carrito",
+                "operationId": "812dafb3cf77f327c3a0a5d45a041c75",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Producto añadido"
+                    },
+                    "400": {
+                        "description": "Stock insuficiente"
+                    }
+                }
+            }
+        },
+        "/orders/process": {
+            "post": {
+                "tags": [
+                    "Pedidos"
+                ],
+                "summary": "Procesar la compra del carrito actual",
+                "operationId": "60782791e7d4a198cdcfe8e83788e166",
+                "responses": {
+                    "200": {
+                        "description": "Compra procesada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "order_id": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error en el proceso (stock insuficiente, carrito vacío)"
+                    }
+                }
+            }
+        },
+        "/products": {
+            "get": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Listar todos los productos",
+                "operationId": "c1ff6f862214e1896c59cfe0491ce0e8",
+                "responses": {
+                    "200": {
+                        "description": "Lista de productos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Crear un nuevo producto",
+                "operationId": "399770d33fa4672f1216707d0e236763",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "description",
+                                    "price",
+                                    "stock"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "type": "number"
+                                    },
+                                    "stock": {
+                                        "type": "integer"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Producto creado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Product": {
+                "title": "Product",
+                "description": "Modelo de Producto",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Camiseta Pro"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Camiseta de alta calidad"
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 25.99
+                    },
+                    "stock": {
+                        "type": "integer",
+                        "example": 100
+                    },
+                    "image": {
+                        "type": "string",
+                        "example": "products/image.jpg"
+                    },
+                    "creation_date": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Carrito",
+            "description": "Carrito"
+        },
+        {
+            "name": "Pedidos",
+            "description": "Pedidos"
+        },
+        {
+            "name": "Productos",
+            "description": "Productos"
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+databases:
+  - name: productos-pro-db
+    databaseName: productospro
+    user: admin_productos
+    plan: free
+
+services:
+  - type: web
+    name: productos-pro-web
+    env: docker
+    plan: free
+    envVars:
+      - key: APP_NAME
+        value: ProductosPro
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        sync: false
+      - key: APP_DEBUG
+        value: "false"
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DATABASE_URL
+        fromDatabase:
+          name: productos-pro-db
+          property: connectionString
