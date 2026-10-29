@@ -7,28 +7,17 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
      * Display the login view.
      */
-    public function create(Request $request): Response
+    public function create(): View
     {
-        $response = response()->view('auth.login');
-
-        if (app()->environment('production')) {
-            $response->headers->set('X-Session-Diagnostic', implode(';', [
-                'driver='.config('session.driver'),
-                'secure='.((bool) config('session.secure') ? 'yes' : 'no'),
-                'domain='.(config('session.domain') === null ? 'host-only' : 'custom'),
-                'cookie='.($request->cookies->has(config('session.cookie')) ? 'received' : 'missing'),
-            ]));
-        }
-
-        return $response;
+        return view('auth.login');
     }
 
     /**

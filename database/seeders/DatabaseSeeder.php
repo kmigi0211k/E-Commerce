@@ -126,8 +126,11 @@ class DatabaseSeeder extends Seeder
             ],
         ];
 
-        foreach ($products as $pData) {
-            Product::firstOrCreate(['name' => $pData['name']], $pData);
+        // Solo sembrar productos iniciales si la tabla de productos está completamente vacía
+        if (Product::count() === 0) {
+            foreach ($products as $pData) {
+                Product::firstOrCreate(['name' => $pData['name']], $pData);
+            }
         }
     }
 
