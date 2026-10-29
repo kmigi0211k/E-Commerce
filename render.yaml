@@ -26,6 +26,10 @@ services:
         value: pgsql
       - key: SESSION_DRIVER
         value: database
+      - key: SESSION_COOKIE
+        value: productospro_session
+      - key: SESSION_SECURE_COOKIE
+        value: "true"
       - key: DATABASE_URL
         fromDatabase:
           name: productos-pro-db
