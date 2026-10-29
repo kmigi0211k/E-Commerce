@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
@@ -33,6 +34,15 @@ class AuthenticationTest extends TestCase
         $response->assertStatus(200)
             ->assertSee('btn-sso-google')
             ->assertDontSee('microsoft');
+    }
+
+    public function test_el_login_puede_guardar_sesiones_en_la_base_de_datos(): void
+    {
+        config(['session.driver' => 'database']);
+
+        $this->get('/login')->assertOk();
+
+        $this->assertTrue(DB::table('sessions')->exists());
     }
 
     public function test_el_acceso_con_google_no_se_muestra_sin_configuracion_de_firebase(): void
