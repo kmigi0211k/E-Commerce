@@ -53,14 +53,14 @@ class DatabaseSeederTest extends TestCase
     {
         $product = \App\Models\Product::factory()->create([
             'id' => 1,
-            'name' => 'Producto propio',
+            'name' => 'Laptop Dell XPS 13 Plus',
             'price' => 123,
             'stock' => 7,
         ]);
 
         $this->seed(DatabaseSeeder::class);
 
-        $this->assertSame('Producto propio', $product->fresh()->name);
+        $this->assertSame('Laptop Dell XPS 13 Plus', $product->fresh()->name);
         $this->assertSame(123, $product->fresh()->price);
         $this->assertSame(7, $product->fresh()->stock);
     }
