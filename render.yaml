@@ -12,6 +12,8 @@ services:
     envVars:
       - key: APP_NAME
         value: ProductosPro
+      - key: APP_URL
+        value: https://proyectointegrador-m084.onrender.com
       - key: APP_ENV
         value: production
       - key: APP_KEY
