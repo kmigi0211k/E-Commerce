@@ -166,12 +166,13 @@
                 display: inline-flex;
                 align-items: center;
                 gap: 8px;
-                padding: 7px 16px;
-                border-radius: 8px;
+                min-height: 42px;
+                padding: 8px 14px;
+                border-radius: 10px;
                 font-weight: 600;
                 font-size: 0.88rem;
                 text-decoration: none;
-                transition: all 0.2s ease;
+                transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
                 border: 1px solid transparent;
                 background: rgba(255, 255, 255, 0.05);
                 color: #cbd5e1;
@@ -181,11 +182,17 @@
             .nav-pill-link:hover {
                 background: rgba(255, 255, 255, 0.12);
                 color: #ffffff;
+                transform: translateY(-1px);
             }
 
             .nav-pill-link.active-shop {
                 background: linear-gradient(135deg, #0284c7, #2563eb);
                 color: #ffffff;
+                box-shadow: 0 5px 14px rgba(37, 99, 235, 0.24);
+            }
+
+            .btn-icon-soft.active-shop i {
+                color: #ffffff !important;
             }
 
             .nav-pill-link.active-community {
@@ -198,6 +205,25 @@
                 color: #ffffff;
             }
 
+            .navbar-actions,
+            .nav-primary-actions,
+            .nav-account-actions {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .navbar-actions,
+            .nav-account-actions {
+                flex-wrap: wrap;
+            }
+
+            .nav-account-actions {
+                padding-left: 12px;
+                margin-left: 4px;
+                border-left: 1px solid rgba(148, 163, 184, 0.3);
+            }
+
             .admin-nav-dropdown .dropdown-menu {
                 min-width: 230px;
                 padding: 8px;
@@ -207,26 +233,11 @@
             }
 
             .admin-nav-dropdown {
-                flex: 0 0 190px;
-            }
-
-            .admin-nav-dropdown > .nav-pill-link,
-            .admin-nav-dropdown > .nav-pill-link.active-panel,
-            .admin-shop-link,
-            #btn-edit-profile {
-                width: 190px;
-                height: 42px;
-                justify-content: center;
-                padding: 6px 10px;
-            }
-
-            .admin-nav-dropdown > .nav-pill-link.active-panel {
-                background: rgba(255, 255, 255, 0.05);
-                color: #cbd5e1;
+                flex: 0 0 auto;
             }
 
             #btn-edit-profile .profile-user-name {
-                max-width: 70px;
+                max-width: 120px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
@@ -263,21 +274,29 @@
                 padding: 6px 14px;
                 font-weight: 600;
                 font-size: 0.85rem;
+                min-height: 42px;
                 display: inline-flex;
                 align-items: center;
                 gap: 7px;
                 text-decoration: none;
-                transition: all 0.2s ease;
+                transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
             }
 
             .btn-icon-soft:hover {
                 background: rgba(255, 255, 255, 0.18);
                 color: #ffffff;
+                transform: translateY(-1px);
+            }
+
+            .btn-icon-soft:focus-visible,
+            .nav-pill-link:focus-visible {
+                outline: 3px solid #67e8f9;
+                outline-offset: 3px;
             }
 
             .nav-auth-link {
-                width: 112px;
-                height: 42px;
+                min-width: 112px;
+                min-height: 42px;
                 justify-content: center;
                 padding: 0 12px;
                 border-radius: 8px;
@@ -347,6 +366,35 @@
                 display: inline-block;
             }
 
+            @media (max-width: 767.98px) {
+                .navbar-actions {
+                    width: 100%;
+                    justify-content: space-between;
+                }
+
+                .nav-account-actions {
+                    margin-left: auto;
+                }
+            }
+
+            @media (max-width: 575.98px) {
+                .nav-account-actions {
+                    padding-left: 0;
+                    margin-left: 0;
+                    border-left: 0;
+                }
+
+                .btn-icon-soft,
+                .nav-pill-link {
+                    padding-right: 10px;
+                    padding-left: 10px;
+                }
+
+                #btn-edit-profile .profile-user-name {
+                    max-width: 82px;
+                }
+            }
+
         </style>
 
         <!-- Scripts -->
@@ -370,93 +418,86 @@
                     
                 </div>
 
-                <!-- User & Navigation Actions (Tienda al lado de Entrar y Registro) -->
-                <div class="d-flex align-items-center flex-wrap gap-2">
-                    @if(Auth::check() && Auth::user()->isAdmin())
-                        <a class="nav-pill-link admin-shop-link" href="{{ route('products.index') }}" id="btn-tienda-admin-nav">
-                            <i class="bi bi-grid-fill"></i>
-                            <span>Tienda</span>
-                        </a>
-                        <div class="dropdown admin-nav-dropdown">
-                            <button class="nav-pill-link dropdown-toggle {{ request()->routeIs('products.*', 'admin.*', 'orders.admin') ? 'active-panel' : '' }}" type="button" id="admin-nav-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-speedometer2 text-warning"></i>
-                                <span>Administración</span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="admin-nav-dropdown">
-                                <li>
-                                    <a class="dropdown-item {{ request()->routeIs('products.index') ? 'active' : '' }}" href="{{ route('products.index') }}" id="btn-tienda-nav">
-                                        <i class="bi bi-shop"></i><span>Tienda</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item {{ request()->routeIs('products.dashboard') ? 'active' : '' }}" href="{{ route('products.dashboard') }}">
-                                        <i class="bi bi-speedometer2"></i><span>Panel de administración</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item {{ request()->routeIs('orders.admin') ? 'active' : '' }}" href="{{ route('orders.admin') }}">
-                                        <i class="bi bi-receipt-cutoff"></i><span>Ventas</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item {{ request()->routeIs('admin.users') ? 'active' : '' }}" href="{{ route('admin.users') }}">
-                                        <i class="bi bi-people-fill"></i><span>Gestión de usuarios</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    @else
-                        <a class="nav-pill-link {{ request()->routeIs('products.index') ? 'active-shop' : '' }}" href="{{ route('products.index') }}" id="btn-tienda-nav">
-                            <i class="bi bi-grid-fill"></i>
-                            <span>Tienda</span>
-                        </a>
-                    @endif
-                    @auth
-                        <!-- Cart -->
-                        <a href="{{ route('cart.index') }}" class="btn-icon-soft position-relative" title="Carrito de compras">
-                            <i class="bi bi-bag-check fs-5 text-info"></i>
-                            @if(session('cart') && count(session('cart')) > 0)
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-counter-badge">
-                                    {{ count(session('cart')) }}
-                                </span>
-                            @endif
-                        </a>
-
-                        <!-- Orders History -->
-                        @if(!Auth::user()->isAdmin())
-                            <a href="{{ route('orders.index') }}" class="btn-icon-soft d-none d-sm-inline-flex" title="Mis compras">
-                                <i class="bi bi-receipt text-success"></i>
-                                <span>Mis Compras</span>
+                <div class="navbar-actions">
+                    <div class="nav-primary-actions">
+                        @if(Auth::check() && Auth::user()->isAdmin())
+                            <a class="nav-pill-link {{ request()->routeIs('products.index') ? 'active-shop' : '' }}" href="{{ route('products.index') }}" id="btn-tienda-admin-nav">
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Tienda</span>
                             </a>
-                            
-                        @endif
-
-                        <!-- Profile Pill -->
-                        <a href="{{ route('profile.edit') }}" class="btn-icon-soft" id="btn-edit-profile">
-                            <div class="user-avatar-circle">
-                                {{ strtoupper(substr(Auth::user()->user_name, 0, 1)) }}
+                            <div class="dropdown admin-nav-dropdown">
+                                <button class="nav-pill-link dropdown-toggle {{ request()->routeIs('products.dashboard', 'products.create', 'products.edit', 'admin.*', 'orders.admin') ? 'active-panel' : '' }}" type="button" id="admin-nav-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-speedometer2 text-warning"></i>
+                                    <span>Administración</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="admin-nav-dropdown">
+                                    <li>
+                                        <a class="dropdown-item {{ request()->routeIs('products.dashboard') ? 'active' : '' }}" href="{{ route('products.dashboard') }}">
+                                            <i class="bi bi-speedometer2"></i><span>Panel de administración</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item {{ request()->routeIs('orders.admin') ? 'active' : '' }}" href="{{ route('orders.admin') }}">
+                                            <i class="bi bi-receipt-cutoff"></i><span>Ventas</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item {{ request()->routeIs('admin.users') ? 'active' : '' }}" href="{{ route('admin.users') }}">
+                                            <i class="bi bi-people-fill"></i><span>Gestión de usuarios</span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
-                            <span class="profile-user-name d-none d-md-inline fw-bold">{{ Auth::user()->user_name }}</span>
-                            @if(Auth::user()->isAdmin())
-                                <span class="badge bg-warning text-dark px-2 py-1 rounded-pill small" style="font-size: 0.65rem;">Admin</span>
-                            @endif
-                        </a>
+                        @else
+                            <a class="nav-pill-link {{ request()->routeIs('products.index') ? 'active-shop' : '' }}" href="{{ route('products.index') }}" id="btn-tienda-nav">
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Tienda</span>
+                            </a>
+                        @endif
+                    </div>
+                    <div class="nav-account-actions">
+                        @auth
+                            <a href="{{ route('cart.index') }}" class="btn-icon-soft position-relative {{ request()->routeIs('cart.*') ? 'active-shop' : '' }}" title="Carrito de compras" aria-label="Carrito de compras">
+                                <i class="bi bi-bag-check fs-5 text-info"></i>
+                                @if(session('cart') && count(session('cart')) > 0)
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-counter-badge">
+                                        {{ count(session('cart')) }}
+                                    </span>
+                                @endif
+                            </a>
 
-                        <!-- Logout Button -->
-                        <form method="POST" action="{{ route('logout') }}" class="mb-0 d-inline">
-                            @csrf
-                            <button type="submit" class="btn-icon-soft text-danger" id="btn-logout" title="Cerrar sesión" style="border-color: rgba(239, 68, 68, 0.3);">
-                                <i class="bi bi-box-arrow-right fs-5"></i>
-                            </button>
-                        </form>
-                    @else
-                        <a href="{{ route('login') }}" class="btn-icon-soft nav-auth-link" id="btn-entrar">
-                            <i class="bi bi-box-arrow-in-right"></i> Entrar
-                        </a>
-                        <a href="{{ route('register') }}" class="btn-icon-soft nav-auth-link nav-register-link fw-bold shadow-sm" id="btn-registro-nav">
-                            <i class="bi bi-person-plus me-1"></i> Registro
-                        </a>
-                    @endauth
+                            @if(!Auth::user()->isAdmin())
+                                <a href="{{ route('orders.index') }}" class="btn-icon-soft {{ request()->routeIs('orders.index') ? 'active-shop' : '' }}" title="Mis compras">
+                                    <i class="bi bi-receipt text-success"></i>
+                                    <span>Mis Compras</span>
+                                </a>
+                            @endif
+
+                            <a href="{{ route('profile.edit') }}" class="btn-icon-soft {{ request()->routeIs('profile.*') ? 'active-shop' : '' }}" id="btn-edit-profile">
+                                <div class="user-avatar-circle">
+                                    {{ strtoupper(substr(Auth::user()->user_name, 0, 1)) }}
+                                </div>
+                                <span class="profile-user-name d-none d-md-inline fw-bold">{{ Auth::user()->user_name }}</span>
+                                @if(Auth::user()->isAdmin())
+                                    <span class="badge bg-warning text-dark px-2 py-1 rounded-pill small" style="font-size: 0.65rem;">Admin</span>
+                                @endif
+                            </a>
+
+                            <form method="POST" action="{{ route('logout') }}" class="mb-0 d-inline">
+                                @csrf
+                                <button type="submit" class="btn-icon-soft text-danger" id="btn-logout" title="Cerrar sesión" aria-label="Cerrar sesión" style="border-color: rgba(239, 68, 68, 0.3);">
+                                    <i class="bi bi-box-arrow-right fs-5"></i>
+                                </button>
+                            </form>
+                        @else
+                            <a href="{{ route('login') }}" class="btn-icon-soft nav-auth-link" id="btn-entrar">
+                                <i class="bi bi-box-arrow-in-right"></i> Entrar
+                            </a>
+                            <a href="{{ route('register') }}" class="btn-icon-soft nav-auth-link nav-register-link fw-bold shadow-sm" id="btn-registro-nav">
+                                <i class="bi bi-person-plus me-1"></i> Registro
+                            </a>
+                        @endauth
+                    </div>
                 </div>
 
             </div>
