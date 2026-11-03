@@ -6,17 +6,17 @@ Este documento detalla las funcionalidades de la aplicación desde la perspectiv
 
 ### HU01: Registro de Usuario Personalizado
 **Como** nuevo usuario del sistema,
-**Quiero** registrarme usando un nombre de usuario único de máximo 15 caracteres,
-**Para** poder acceder a la gestión de productos de forma segura.
+**Quiero** registrarme con mis datos personales, un correo electrónico y un nombre de usuario único,
+**Para** acceder a la tienda y realizar compras de forma segura.
 - **Criterios de Aceptación:**
-    - El sistema debe validar que el `user_name` sea único.
-    - No se requiere una cuenta de correo electrónico.
-    - La contraseña debe confirmarse para evitar errores.
+    - El sistema debe validar que el correo y el `user_name` sean únicos; el nombre de usuario admite hasta 15 caracteres.
+    - El correo debe verificarse mediante un código de seis dígitos.
+    - La contraseña debe confirmarse y cumplir la política de seguridad indicada en el formulario.
 
 ### HU02: Inicio de Sesión
 **Como** usuario registrado,
 **Quiero** iniciar sesión con mi `user_name` y contraseña,
-**Para** acceder a mis herramientas de gestión.
+**Para** acceder a la tienda y a las funciones permitidas por mi rol.
 
 ---
 
@@ -33,8 +33,8 @@ Este documento detalla las funcionalidades de la aplicación desde la perspectiv
 
 ### HU04: Visualización de Inventario
 **Como** usuario del sistema,
-**Quiero** ver una lista elegante de todos mis productos con miniaturas de sus fotos,
-**Para** tener un control visual de mi stock actual.
+**Quiero** consultar el catálogo de productos disponibles con sus imágenes, precios y detalles,
+**Para** encontrar los productos que me interesan.
 
 ---
 
@@ -82,11 +82,10 @@ Este documento detalla las funcionalidades de la aplicación desde la perspectiv
 
 ### HU09: Registro de Voluntariado por Producto
 **Como** miembro de la comunidad "12 de Octubre",
-**Quiero** comprometerme a realizar horas de servicio social,
-**Para** obtener un producto sin costo monetario y contribuir al barrio.
+**Quiero** postularme a un producto indicando el tipo de ayuda, las horas y mis datos de contacto,
+**Para** que el administrador revise mi solicitud de voluntariado.
 - **Criterios de Aceptación:**
-    - El usuario debe especificar el tipo de ayuda y las horas comprometidas.
-    - El sistema debe redirigir al usuario a WhatsApp para coordinar con el administrador.
-    - Se debe crear un registro de voluntariado en estado "pendiente".
-
+    - El usuario debe especificar el tipo de ayuda, las horas comprometidas y un teléfono de contacto.
+    - La solicitud se registra en estado "pendiente" y el usuario puede consultar su estado.
+    - El administrador puede revisar y actualizar el estado de la solicitud.
 

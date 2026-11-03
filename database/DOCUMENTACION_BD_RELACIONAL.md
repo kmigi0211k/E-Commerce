@@ -162,17 +162,22 @@ INNER JOIN products prod ON v.product_id = prod.id;
 
 ---
 
-## 5. 🚀 Cómo importar la Base de Datos en MySQL / Laragon
+## 5. Preparar la Base de Datos en MySQL / Laragon
 
-### Opción A: Mediante phpMyAdmin / HeidiSQL
-1. Abre **Laragon** y presiona **"Iniciar todo"** (Start All).
-2. Entra a phpMyAdmin (`http://localhost/phpmyadmin`).
-3. Ve a la pestaña **"Importar"**.
-4. Selecciona el archivo: `database/entrega_mysql_completa.sql`.
-5. Clic en **"Continuar"**. Se creará la base de datos `laravel` con todas sus tablas, restricciones y datos de prueba.
+1. Inicia MySQL desde Laragon y crea una base de datos vacía.
+2. Configura la conexión en `.env` (`DB_CONNECTION`, `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME` y `DB_PASSWORD`).
+3. Ejecuta las migraciones para crear el esquema:
 
-### Opción B: Mediante Laravel Artisan
-```bash
-php artisan migrate:fresh --seed
-```
-Este comando ejecutará todas las migraciones y el seeder actualizado con los mismos datos reales.
+   ```bash
+   php artisan migrate
+   ```
+
+4. Opcionalmente, carga los datos de ejemplo:
+
+   ```bash
+   php artisan db:seed
+   ```
+
+   Para crear el primer administrador, configura `BOOTSTRAP_ADMIN_USERNAME`, `BOOTSTRAP_ADMIN_PASSWORD`, `BOOTSTRAP_ADMIN_EMAIL` y `BOOTSTRAP_ADMIN_NAME` en `.env` antes de sembrar.
+
+No importes volcados SQL de otras versiones ni ejecutes `migrate:fresh` sobre una base de datos que contenga información que quieras conservar. Consulta el [README](../README.md) para los requisitos y el procedimiento completo de instalación.
