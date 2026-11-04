@@ -1,4 +1,4 @@
-# Historias de Usuario - ProductosPro Laravel
+# Historias de Usuario - Inventario
 
 Este documento detalla las funcionalidades de la aplicación desde la perspectiva del usuario final.
 
@@ -88,4 +88,3 @@ Este documento detalla las funcionalidades de la aplicación desde la perspectiv
     - El usuario debe especificar el tipo de ayuda, las horas comprometidas y un teléfono de contacto.
     - La solicitud se registra en estado "pendiente" y el usuario puede consultar su estado.
     - El administrador puede revisar y actualizar el estado de la solicitud.
-

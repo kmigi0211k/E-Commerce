@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'ProductosPro') }} - Acceso seguro</title>
+        <title>{{ config('app.name', 'Inventario') }} - Acceso seguro</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,9 +85,9 @@
     </head>
     <body class="font-sans text-gray-900 antialiased">
         <main class="guest-shell">
-            <a href="{{ url('/') }}" class="guest-brand" aria-label="ProductosPro, página principal">
+            <a href="{{ url('/') }}" class="guest-brand" aria-label="Inventario, página principal">
                 <span class="guest-brand-icon"><i class="bi bi-cpu-fill"></i></span>
-                <span>Productos<span>Pro</span></span>
+                <span>Inventario</span>
             </a>
             <div class="guest-card">
                 {{ $slot }}

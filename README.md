@@ -1,4 +1,4 @@
-# ProductosPro
+# Inventario
 
 <div align="center">
 
@@ -11,7 +11,7 @@ Explora productos, gestiona compras y participa en iniciativas de voluntariado d
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-5-7952B3?logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 [![Deploy en Render](https://img.shields.io/badge/Deploy-Render-46E3B7?logo=render&logoColor=111)](https://proyectointegrador-m084.onrender.com)
 
-**[Ver ProductosPro en vivo](https://proyectointegrador-m084.onrender.com)**
+**[Ver Inventario en vivo](https://proyectointegrador-m084.onrender.com)**
 
 </div>
 
@@ -19,7 +19,7 @@ Explora productos, gestiona compras y participa en iniciativas de voluntariado d
 
 ## Sobre el proyecto
 
-ProductosPro es una aplicación web desarrollada con Laravel para administrar un catálogo de productos y ofrecer una experiencia de compra con carrito, pedidos y seguimiento. También incluye un espacio de voluntariado comunitario y herramientas de administración.
+Inventario es una aplicación web desarrollada con Laravel para administrar productos, categorías y existencias, además de gestionar compras, pedidos y usuarios. También incluye un espacio de voluntariado comunitario.
 
 ## Lo que puedes hacer
 
@@ -29,7 +29,7 @@ ProductosPro es una aplicación web desarrollada con Laravel para administrar un
 | **Cuenta** | Registrarse con verificación por correo, iniciar sesión y gestionar el perfil. Google mediante Firebase está disponible como opción configurable. |
 | **Compras** | Añadir productos al carrito, finalizar un pedido, consultar el historial y revisar el estado de la compra. |
 | **Comunidad** | Consultar productos solidarios, enviar postulaciones de voluntariado y revisar su estado. |
-| **Administración** | Gestionar productos e inventario, revisar pedidos, administrar usuarios y responder a postulaciones. |
+| **Administración** | Consultar el dashboard y estadísticas, gestionar productos, categorías y usuarios, restablecer contraseñas con cambio obligatorio, revisar pedidos y responder a postulaciones. |
 
 > **Importante:** los métodos de pago que muestra el checkout son informativos. La aplicación no procesa cobros en línea; los pedidos quedan pendientes hasta que el administrador confirme el pago por separado.
 
@@ -71,7 +71,7 @@ php artisan key:generate
 Crea una base de datos vacía en MySQL y configura estos valores en `.env`:
 
 ```dotenv
-APP_NAME=ProductosPro
+APP_NAME=Inventario
 APP_URL=http://localhost
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1

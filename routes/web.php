@@ -1,23 +1,24 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\ConfirmablePasswordController;
+use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\FirebaseAuthController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\VerificationCodeController;
+use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolunteerController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Auth\VerifyEmailController;
-use App\Http\Controllers\Auth\VerificationCodeController;
-use App\Http\Controllers\Auth\FirebaseAuthController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProductController::class, 'index'])->name('home');
 
@@ -68,6 +69,10 @@ Route::middleware('auth')->group(function () {
         Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
 
         Route::get('/admin/users', [UserController::class, 'adminIndex'])->name('admin.users');
+        Route::post('/admin/users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('admin.users.reset-password');
+        Route::get('/admin/categories', [CategoryController::class, 'index'])->name('admin.categories');
+        Route::post('/admin/categories', [CategoryController::class, 'store'])->name('admin.categories.store');
+        Route::delete('/admin/categories/{category}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
         Route::get('/admin/volunteers', [VolunteerController::class, 'admin'])->name('volunteers.admin');
         Route::patch('/admin/volunteers/{id}', [VolunteerController::class, 'updateStatus'])->name('volunteers.updateStatus');
         Route::delete('/admin/volunteers/{id}', [VolunteerController::class, 'destroy'])->name('volunteers.destroy');

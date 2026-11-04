@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'ProductosPro') }} - Tienda en Línea</title>
+        <title>{{ config('app.name', 'Inventario') }} | Sistema de Inventario</title>
 
         <!-- Google Fonts: Plus Jakarta Sans -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -412,7 +412,7 @@
                             <i class="bi bi-cpu-fill"></i>
                         </div>
                         <div>
-                            <h1 class="navbar-brand-title">Productos<span>Pro</span></h1>
+                            <h1 class="navbar-brand-title">Inventario</h1>
                         </div>
                     </a>
                     
@@ -531,6 +531,19 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+                @if(session('warning'))
+                    <div class="alert alert-warning alert-modern alert-dismissible fade show mb-4" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ session('warning') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                @if(session('temporary_password'))
+                    <div class="alert alert-warning alert-modern mb-4" role="alert">
+                        <strong>Contraseña temporal (se muestra una sola vez):</strong>
+                        <code class="user-select-all ms-2">{{ session('temporary_password') }}</code>
+                        <p class="small mb-0 mt-2">Compártela con el usuario por un canal seguro. No vuelvas a solicitarla: no se almacena en texto plano.</p>
+                    </div>
+                @endif
             </div>
 
             @yield('content')
@@ -539,7 +552,7 @@
                 <!-- Footer Minimalista y Limpio -->
         <footer class="py-3 mt-auto text-center text-muted small border-top bg-white">
             <div class="container">
-                <span>&copy; {{ date('Y') }} ProductosPro. Todos los derechos reservados.</span>
+                <span>&copy; {{ date('Y') }} Inventario. Todos los derechos reservados.</span>
             </div>
         </footer>
 

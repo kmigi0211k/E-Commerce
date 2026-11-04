@@ -37,6 +37,7 @@
                         <th class="py-3 text-center">Rol</th>
                         <th class="py-3">Fecha Registro</th>
                         <th class="py-3">Última Conexión</th>
+                        <th class="py-3 pe-4 text-end">Seguridad</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,6 +60,15 @@
                             @else
                                 <span class="text-muted small italic">Sin perfil completado</span>
                             @endif
+                        </td>
+                        <td class="pe-4 text-end">
+                            <form method="POST" action="{{ route('admin.users.reset-password', $user) }}"
+                                onsubmit="return confirm('¿Generar una contraseña temporal para {{ $user->user_name }}?');">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-outline-primary rounded-pill">
+                                    <i class="bi bi-key me-1"></i>Restablecer contraseña
+                                </button>
+                            </form>
                         </td>
                         <td class="text-center">
                             @if($user->isAdmin())

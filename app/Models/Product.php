@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  *     schema="Product",
  *     title="Product",
  *     description="Modelo de Producto",
+ *
  *     @OA\Property(property="id", type="integer", example=1),
  *     @OA\Property(property="name", type="string", example="Camiseta Pro"),
  *     @OA\Property(property="description", type="string", example="Camiseta de alta calidad"),
@@ -32,11 +33,17 @@ class Product extends Model
         'image',
         'creation_date',
         'is_active',
+        'category_id',
     ];
 
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     public function volunteers()
