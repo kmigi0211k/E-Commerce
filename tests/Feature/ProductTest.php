@@ -42,6 +42,27 @@ class ProductTest extends TestCase
     }
 
     /** @test */
+    public function la_navegacion_muestra_inventario_y_oculta_el_carrito()
+    {
+        $this->actingAs($this->user)
+            ->get(route('products.index'))
+            ->assertOk()
+            ->assertSee('>Inventario</span>', false)
+            ->assertDontSee('Carrito de compras')
+            ->assertDontSee('bi-bag-check', false);
+
+        $customerRole = \App\Models\Role::create(['description' => 'Customer', 'status' => 1]);
+        $customer = User::factory()->create(['role_id' => $customerRole->id]);
+
+        $this->actingAs($customer)
+            ->get(route('products.index'))
+            ->assertOk()
+            ->assertSee('>Inventario</span>', false)
+            ->assertDontSee('Carrito de compras')
+            ->assertDontSee('bi-bag-check', false);
+    }
+
+    /** @test */
     public function la_portada_conserva_la_busqueda_y_no_muestra_filtros_ni_anuncios()
     {
         $this->get(route('products.index'))

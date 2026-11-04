@@ -423,7 +423,7 @@
                         @if(Auth::check() && Auth::user()->isAdmin())
                             <a class="nav-pill-link {{ request()->routeIs('products.index') ? 'active-shop' : '' }}" href="{{ route('products.index') }}" id="btn-tienda-admin-nav">
                                 <i class="bi bi-grid-fill"></i>
-                                <span>Tienda</span>
+                                <span>Inventario</span>
                             </a>
                             <div class="dropdown admin-nav-dropdown">
                                 <button class="nav-pill-link dropdown-toggle {{ request()->routeIs('products.dashboard', 'products.create', 'products.edit', 'admin.*', 'orders.admin') ? 'active-panel' : '' }}" type="button" id="admin-nav-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -451,21 +451,12 @@
                         @else
                             <a class="nav-pill-link {{ request()->routeIs('products.index') ? 'active-shop' : '' }}" href="{{ route('products.index') }}" id="btn-tienda-nav">
                                 <i class="bi bi-grid-fill"></i>
-                                <span>Tienda</span>
+                                <span>Inventario</span>
                             </a>
                         @endif
                     </div>
                     <div class="nav-account-actions">
                         @auth
-                            <a href="{{ route('cart.index') }}" class="btn-icon-soft position-relative {{ request()->routeIs('cart.*') ? 'active-shop' : '' }}" title="Carrito de compras" aria-label="Carrito de compras">
-                                <i class="bi bi-bag-check fs-5 text-info"></i>
-                                @if(session('cart') && count(session('cart')) > 0)
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-counter-badge">
-                                        {{ count(session('cart')) }}
-                                    </span>
-                                @endif
-                            </a>
-
                             @if(!Auth::user()->isAdmin())
                                 <a href="{{ route('orders.index') }}" class="btn-icon-soft {{ request()->routeIs('orders.index') ? 'active-shop' : '' }}" title="Mis compras">
                                     <i class="bi bi-receipt text-success"></i>
