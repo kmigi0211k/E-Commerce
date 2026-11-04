@@ -69,6 +69,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
 
         Route::get('/admin/users', [UserController::class, 'adminIndex'])->name('admin.users');
+        Route::post('/admin/users/{user}/promote-to-admin', [UserController::class, 'promoteToAdmin'])->name('admin.users.promote');
         Route::post('/admin/users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('admin.users.reset-password');
         Route::get('/admin/categories', [CategoryController::class, 'index'])->name('admin.categories');
         Route::post('/admin/categories', [CategoryController::class, 'store'])->name('admin.categories.store');

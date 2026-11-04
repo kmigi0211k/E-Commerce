@@ -115,6 +115,38 @@ class InventoryDashboardAndAdminPasswordTest extends TestCase
         $this->assertFalse($target->fresh()->password_needs_reset);
     }
 
+    public function test_administrator_can_promote_a_user_from_the_user_management_page(): void
+    {
+        $target = User::factory()->create();
+
+        $this->actingAs($this->admin)
+            ->get(route('admin.users'))
+            ->assertOk()
+            ->assertSee(route('admin.users.promote', $target), false)
+            ->assertSee('Hacer administrador');
+
+        $this->post(route('admin.users.promote', $target))
+            ->assertRedirect(route('admin.users'))
+            ->assertSessionHas('success');
+
+        $target->refresh();
+        $this->assertTrue($target->isAdmin());
+        $this->assertSame('Admin', $target->role->description);
+    }
+
+    public function test_non_administrator_cannot_promote_another_user(): void
+    {
+        $user = User::factory()->create();
+        $target = User::factory()->create();
+        $originalRoleId = $target->role_id;
+
+        $this->actingAs($user)
+            ->post(route('admin.users.promote', $target))
+            ->assertForbidden();
+
+        $this->assertSame($originalRoleId, $target->fresh()->role_id);
+    }
+
     public function test_dashboard_movement_chart_uses_existing_purchase_and_order_item_records(): void
     {
         $product = Product::factory()->create();

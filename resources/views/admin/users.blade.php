@@ -37,7 +37,7 @@
                         <th class="py-3 text-center">Rol</th>
                         <th class="py-3">Fecha Registro</th>
                         <th class="py-3">Última Conexión</th>
-                        <th class="py-3 pe-4 text-end">Seguridad</th>
+                        <th class="py-3 pe-4 text-end">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,15 +61,6 @@
                                 <span class="text-muted small italic">Sin perfil completado</span>
                             @endif
                         </td>
-                        <td class="pe-4 text-end">
-                            <form method="POST" action="{{ route('admin.users.reset-password', $user) }}"
-                                onsubmit="return confirm('¿Generar una contraseña temporal para {{ $user->user_name }}?');">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-outline-primary rounded-pill">
-                                    <i class="bi bi-key me-1"></i>Restablecer contraseña
-                                </button>
-                            </form>
-                        </td>
                         <td class="text-center">
                             @if($user->isAdmin())
                                 <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-3 py-2 fw-bold">Administrador</span>
@@ -88,6 +79,26 @@
                             @else
                                 <span class="text-muted small">No disponible</span>
                             @endif
+                        </td>
+                        <td class="pe-4 text-end">
+                            <div class="d-flex flex-column flex-sm-row justify-content-end gap-2">
+                                @if(!$user->isAdmin())
+                                    <form method="POST" action="{{ route('admin.users.promote', $user) }}"
+                                        onsubmit="return confirm('¿Convertir a {{ $user->user_name }} en administrador? Tendrá acceso a todas las funciones administrativas.');">
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill text-nowrap">
+                                            <i class="bi bi-shield-lock me-1"></i>Hacer administrador
+                                        </button>
+                                    </form>
+                                @endif
+                                <form method="POST" action="{{ route('admin.users.reset-password', $user) }}"
+                                    onsubmit="return confirm('¿Generar una contraseña temporal para {{ $user->user_name }}?');">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-outline-primary rounded-pill text-nowrap">
+                                        <i class="bi bi-key me-1"></i>Restablecer contraseña
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     @endforeach
