@@ -1,5 +1,5 @@
 # 🗄️ Documentación de Base de Datos Relacional (MySQL)
-**Proyecto Integrador:** Inventario - Sistema de Gestión de Inventario, Ventas y Voluntariado Solidario
+**Proyecto Integrador:** ProductosPro - Sistema de Gestión de Inventario, Ventas y Voluntariado Solidario  
 **Estudiante:** Juan Camilo Giraldo  
 **Motor de Base de Datos:** MySQL 8.0 / MariaDB (InnoDB)  
 

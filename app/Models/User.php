@@ -49,7 +49,6 @@ class User extends Authenticatable
         'verification_expires_at' => 'datetime',
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
-        'password_needs_reset' => 'boolean',
     ];
 
     public function person()

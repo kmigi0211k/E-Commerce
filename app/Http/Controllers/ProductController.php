@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\OrderItem;
 use App\Models\Product;
-use App\Models\Purchase;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -87,63 +83,14 @@ class ProductController extends Controller
 
     public function dashboard()
     {
-        $products = Product::with('category')->latest()->get();
-        $productCount = Product::count();
-        $categoryCount = Category::count();
-        $lowStockCount = Product::whereBetween('stock', [1, 5])->count();
-        $outOfStockCount = Product::where('stock', 0)->count();
-        $lowStockProducts = Product::with('category')
-            ->whereBetween('stock', [1, 5])
-            ->orderBy('stock')
-            ->orderBy('name')
-            ->limit(8)
-            ->get();
+        $products = Product::all();
 
-        $periodStart = now()->startOfMonth()->subMonths(5);
-        $periodEnd = now()->endOfMonth();
-        $monthKeys = collect(range(0, 5))
-            ->map(fn (int $offset) => $periodStart->copy()->addMonths($offset)->format('Y-m'));
-        $monthLabels = $monthKeys->map(fn (string $month) => Carbon::createFromFormat('Y-m', $month)->translatedFormat('M Y'));
-        $monthTotals = fn ($records) => $records
-            ->groupBy(fn ($record) => $record->created_at->format('Y-m'))
-            ->map(fn ($records) => $records->sum('quantity'));
-
-        $purchasesByMonth = $monthTotals(Purchase::whereBetween('created_at', [$periodStart, $periodEnd])
-            ->get(['created_at', 'quantity']));
-        $ordersByMonth = $monthTotals(OrderItem::whereBetween('created_at', [$periodStart, $periodEnd])
-            ->get(['created_at', 'quantity']));
-
-        $inventoryChart = [
-            'labels' => ['Stock suficiente', 'Stock bajo', 'Agotados'],
-            'values' => [
-                Product::where('stock', '>', 5)->count(),
-                $lowStockCount,
-                $outOfStockCount,
-            ],
-        ];
-        $movementChart = [
-            'labels' => $monthLabels->values(),
-            'entries' => $monthKeys->map(fn (string $month) => $purchasesByMonth->get($month, 0))->values(),
-            'exits' => $monthKeys->map(fn (string $month) => $ordersByMonth->get($month, 0))->values(),
-        ];
-
-        return view('products.dashboard', compact(
-            'products',
-            'productCount',
-            'categoryCount',
-            'lowStockCount',
-            'outOfStockCount',
-            'lowStockProducts',
-            'inventoryChart',
-            'movementChart'
-        ));
+        return view('products.dashboard', compact('products'));
     }
 
     public function create()
     {
-        $categories = Category::orderBy('name')->get();
-
-        return view('products.create', compact('categories'));
+        return view('products.create');
     }
 
     /**
@@ -181,7 +128,6 @@ class ProductController extends Controller
             'description' => 'required',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'category_id' => 'nullable|exists:categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
             'image_url' => 'nullable|url:http,https|max:255',
         ]);
@@ -207,9 +153,7 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        $categories = Category::orderBy('name')->get();
-
-        return view('products.edit', compact('product', 'categories'));
+        return view('products.edit', compact('product'));
     }
 
     public function update(Request $request, Product $product)
@@ -219,7 +163,6 @@ class ProductController extends Controller
             'description' => 'required',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'category_id' => 'nullable|exists:categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
             'image_url' => 'nullable|url:http,https|max:255',
         ]);

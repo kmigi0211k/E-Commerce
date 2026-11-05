@@ -1,5 +1,5 @@
 /**
- * Firebase Authentication (correo/contraseña + Google) para Inventario.
+ * Firebase Authentication (correo/contraseña + Google) para ProductosPro.
  *
  * Flujo: el navegador autentica contra Firebase, obtiene un ID token y se lo envía a Laravel,
  * que lo valida con Google y abre la sesión. Laravel nunca confía en el correo que manda el navegador.

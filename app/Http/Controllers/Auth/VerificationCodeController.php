@@ -80,7 +80,7 @@ class VerificationCodeController extends Controller
         // Iniciar sesión
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME)->with('success', '¡Cuenta verificada exitosamente! Bienvenido a Inventario.');
+        return redirect(RouteServiceProvider::HOME)->with('success', '¡Cuenta verificada exitosamente! Bienvenido a ProductosPro.');
     }
 
     /**

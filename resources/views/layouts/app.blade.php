@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>Inventario | Sistema de Inventario</title>
+        <title>{{ config('app.name', 'ProductosPro') }} - Tienda en Línea</title>
 
         <!-- Google Fonts: Plus Jakarta Sans -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -412,7 +412,7 @@
                             <i class="bi bi-cpu-fill"></i>
                         </div>
                         <div>
-                            <h1 class="navbar-brand-title">Inventario</h1>
+                            <h1 class="navbar-brand-title">Productos<span>Pro</span></h1>
                         </div>
                     </a>
                     
@@ -423,7 +423,7 @@
                         @if(Auth::check() && Auth::user()->isAdmin())
                             <a class="nav-pill-link {{ request()->routeIs('products.index') ? 'active-shop' : '' }}" href="{{ route('products.index') }}" id="btn-tienda-admin-nav">
                                 <i class="bi bi-grid-fill"></i>
-                                <span>Inventario</span>
+                                <span>Tienda</span>
                             </a>
                             <div class="dropdown admin-nav-dropdown">
                                 <button class="nav-pill-link dropdown-toggle {{ request()->routeIs('products.dashboard', 'products.create', 'products.edit', 'admin.*', 'orders.admin') ? 'active-panel' : '' }}" type="button" id="admin-nav-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -451,12 +451,21 @@
                         @else
                             <a class="nav-pill-link {{ request()->routeIs('products.index') ? 'active-shop' : '' }}" href="{{ route('products.index') }}" id="btn-tienda-nav">
                                 <i class="bi bi-grid-fill"></i>
-                                <span>Inventario</span>
+                                <span>Tienda</span>
                             </a>
                         @endif
                     </div>
                     <div class="nav-account-actions">
                         @auth
+                            <a href="{{ route('cart.index') }}" class="btn-icon-soft position-relative {{ request()->routeIs('cart.*') ? 'active-shop' : '' }}" title="Carrito de compras" aria-label="Carrito de compras">
+                                <i class="bi bi-bag-check fs-5 text-info"></i>
+                                @if(session('cart') && count(session('cart')) > 0)
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-counter-badge">
+                                        {{ count(session('cart')) }}
+                                    </span>
+                                @endif
+                            </a>
+
                             @if(!Auth::user()->isAdmin())
                                 <a href="{{ route('orders.index') }}" class="btn-icon-soft {{ request()->routeIs('orders.index') ? 'active-shop' : '' }}" title="Mis compras">
                                     <i class="bi bi-receipt text-success"></i>
@@ -522,19 +531,6 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                @if(session('warning'))
-                    <div class="alert alert-warning alert-modern alert-dismissible fade show mb-4" role="alert">
-                        <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ session('warning') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-                @if(session('temporary_password'))
-                    <div class="alert alert-warning alert-modern mb-4" role="alert">
-                        <strong>Contraseña temporal (se muestra una sola vez):</strong>
-                        <code class="user-select-all ms-2">{{ session('temporary_password') }}</code>
-                        <p class="small mb-0 mt-2">Compártela con el usuario por un canal seguro. No vuelvas a solicitarla: no se almacena en texto plano.</p>
-                    </div>
-                @endif
             </div>
 
             @yield('content')
@@ -543,7 +539,7 @@
                 <!-- Footer Minimalista y Limpio -->
         <footer class="py-3 mt-auto text-center text-muted small border-top bg-white">
             <div class="container">
-                <span>&copy; {{ date('Y') }} Inventario. Todos los derechos reservados.</span>
+                <span>&copy; {{ date('Y') }} ProductosPro. Todos los derechos reservados.</span>
             </div>
         </footer>
 

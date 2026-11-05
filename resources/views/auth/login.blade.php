@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Iniciar Sesión — Inventario</title>
+    <title>Iniciar Sesión — ProductosPro</title>
 
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -366,7 +366,7 @@
             <div class="login-brand-icon">
                 <i class="bi bi-cpu-fill"></i>
             </div>
-            <h1 class="login-brand-name">Inventario</h1>
+            <h1 class="login-brand-name">Productos<span>Pro</span></h1>
         </a>
 
         <div class="form-heading">

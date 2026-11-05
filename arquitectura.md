@@ -1,10 +1,10 @@
-# Arquitectura de Inventario
+# Arquitectura de ProductosPro
 
-Inventario es una aplicación Laravel 10 basada en el patrón MVC. Las vistas Blade y los recursos de Vite proporcionan la interfaz; los controladores gestionan autenticación, productos, categorías, carrito y pedidos; Eloquent accede a MySQL en desarrollo local y PostgreSQL en Render.
+ProductosPro es una aplicación Laravel 10 basada en el patrón MVC. Las vistas Blade y los recursos de Vite proporcionan la interfaz; los controladores gestionan los flujos de autenticación, catálogo, carrito y pedidos; Eloquent accede a MySQL.
 
 ## Componentes principales
 
-- `app/Models`: modelos `User`, `Person`, `Product`, `Category`, `Order` y sus relaciones.
+- `app/Models`: modelos `User`, `Person`, `Product`, `Order` y sus relaciones.
 - `app/Http/Controllers`: endpoints de autenticación, perfil, productos, carrito, pedidos y administración.
 - `app/Http/Requests`: validación de solicitudes de autenticación y perfil.
 - `database/migrations`: esquema versionado para instalaciones nuevas.
@@ -16,8 +16,6 @@ Inventario es una aplicación Laravel 10 basada en el patrón MVC. Las vistas Bl
 Las cuentas relacionan `users` con `people`; el nombre de usuario identifica el acceso local. El flujo local valida la contraseña, verifica reCAPTCHA y rechaza cuentas inactivas. Los correos de perfil no se pueden cambiar desde el formulario de datos personales, ya que el correo verificado también se utiliza para vincular la identidad de Firebase.
 
 Google/Firebase es opcional. Laravel valida el ID token en el servidor y exige un correo verificado antes de iniciar la sesión. Las cuentas creadas mediante Firebase permanecen pendientes hasta la verificación del correo.
-
-Los administradores pueden emitir una contraseña temporal de un solo uso para otra cuenta. El hash se almacena con Laravel, se rota el token de sesión recordada y el middleware limita al usuario a su perfil y al formulario de cambio de contraseña hasta que la reemplace.
 
 ## Carrito y pedidos
 

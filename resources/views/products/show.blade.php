@@ -211,7 +211,7 @@
                     <div class="product-meta">
                         <div class="meta-item">
                             <div class="meta-icon"><i class="bi bi-shield-check"></i></div>
-                            <div>Garantía Oficial Inventario</div>
+                            <div>Garantía Oficial ProductosPro</div>
                         </div>
                         <div class="meta-item">
                             <div class="meta-icon"><i class="bi bi-truck"></i></div>

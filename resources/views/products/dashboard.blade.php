@@ -84,57 +84,6 @@
         color: #075985;
     }
 
-    .overview-grid {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 14px;
-        margin-bottom: 22px;
-    }
-
-    .overview-card {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        padding: 18px;
-        border: 1px solid #dbe5f0;
-        border-radius: 17px;
-        background: #fff;
-        box-shadow: 0 7px 20px rgba(15, 23, 42, 0.05);
-    }
-
-    .overview-card .stat-value { font-size: 24px; }
-
-    .analytics-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 18px;
-        margin-bottom: 22px;
-    }
-
-    .analytics-card {
-        min-width: 0;
-        padding: 22px;
-        border: 1px solid #dbe5f0;
-        border-radius: 18px;
-        background: #fff;
-        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
-    }
-
-    .analytics-card h2 {
-        color: #0f172a;
-        font-size: 16px;
-        font-weight: 800;
-        margin: 0 0 4px;
-    }
-
-    .analytics-card p {
-        color: #64748b;
-        font-size: 12px;
-        margin: 0 0 16px;
-    }
-
-    .chart-container { position: relative; height: 245px; }
-
     .dash-layout {
         display: grid;
         grid-template-columns: minmax(0, 1fr) 285px;
@@ -500,50 +449,6 @@
             </a>
         </div>
 
-        <section class="overview-grid" aria-label="Resumen del inventario">
-            <div class="overview-card">
-                <div class="stat-icon-box icon-indigo"><i class="bi bi-box-seam-fill"></i></div>
-                <div class="stat-info">
-                    <div class="stat-value">{{ $productCount }}</div>
-                    <div class="stat-label">Total productos</div>
-                </div>
-            </div>
-            <div class="overview-card">
-                <div class="stat-icon-box icon-green"><i class="bi bi-tags-fill"></i></div>
-                <div class="stat-info">
-                    <div class="stat-value">{{ $categoryCount }}</div>
-                    <div class="stat-label">Categorías</div>
-                </div>
-            </div>
-            <div class="overview-card">
-                <div class="stat-icon-box icon-amber"><i class="bi bi-exclamation-triangle-fill"></i></div>
-                <div class="stat-info">
-                    <div class="stat-value">{{ $lowStockCount }}</div>
-                    <div class="stat-label">Stock bajo (1-5)</div>
-                </div>
-            </div>
-            <div class="overview-card">
-                <div class="stat-icon-box icon-red"><i class="bi bi-x-circle-fill"></i></div>
-                <div class="stat-info">
-                    <div class="stat-value">{{ $outOfStockCount }}</div>
-                    <div class="stat-label">Productos agotados</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="analytics-grid" aria-label="Estadísticas del inventario">
-            <article class="analytics-card">
-                <h2>Estado del inventario</h2>
-                <p>Distribución actual de todos los productos registrados.</p>
-                <div class="chart-container"><canvas id="inventory-chart" aria-label="Productos por nivel de stock"></canvas></div>
-            </article>
-            <article class="analytics-card">
-                <h2>Movimientos registrados</h2>
-                <p>Unidades compradas y unidades vendidas en los últimos seis meses.</p>
-                <div class="chart-container"><canvas id="movement-chart" aria-label="Entradas y salidas mensuales"></canvas></div>
-            </article>
-        </section>
-
         <div class="dash-layout">
             <section class="inventory-column" aria-label="Inventario de productos">
                 <div class="table-card">
@@ -639,50 +544,46 @@
                     <a href="{{ route('admin.users') }}" class="admin-link">
                         <i class="bi bi-people-fill"></i><span>Gestión de usuarios</span>
                     </a>
-                    <a href="{{ route('admin.categories') }}" class="admin-link">
-                        <i class="bi bi-tags-fill"></i><span>Gestionar categorías</span>
-                    </a>
-                    <a href="{{ route('products.create') }}" class="admin-link">
-                        <i class="bi bi-plus-circle-fill"></i><span>Registrar producto</span>
-                    </a>
                     <a href="{{ route('orders.admin') }}" class="admin-link">
                         <i class="bi bi-receipt-cutoff"></i><span>Historial de compras</span>
                     </a>
                 </section>
+
+                <section class="rail-card">
+                    <h2 class="rail-title">Estado del inventario</h2>
+                    <div class="stats-row">
+                        <div class="stat-card">
+                            <div class="stat-icon-box icon-indigo"><i class="bi bi-box-seam-fill"></i></div>
+                            <div class="stat-info">
+                                <div class="stat-value">{{ $products->count() }}</div>
+                                <div class="stat-label">Total productos</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon-box icon-green"><i class="bi bi-check-circle-fill"></i></div>
+                            <div class="stat-info">
+                                <div class="stat-value">{{ $products->where('stock', '>', 5)->count() }}</div>
+                                <div class="stat-label">Stock suficiente</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon-box icon-amber"><i class="bi bi-exclamation-triangle-fill"></i></div>
+                            <div class="stat-info">
+                                <div class="stat-value">{{ $products->where('stock', '<=', 5)->where('stock', '>', 0)->count() }}</div>
+                                <div class="stat-label">Stock bajo</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon-box icon-red"><i class="bi bi-x-circle-fill"></i></div>
+                            <div class="stat-info">
+                                <div class="stat-value">{{ $products->where('stock', 0)->count() }}</div>
+                                <div class="stat-label">Sin stock</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </aside>
         </div>
-
-        <section class="table-card mt-4">
-            <div class="table-header">
-                <div>
-                    <div class="table-title"><i class="bi bi-exclamation-circle-fill me-2 text-warning"></i>Productos con bajo inventario</div>
-                    <div class="text-muted small mt-1">Productos que requieren reposición (hasta 5 unidades).</div>
-                </div>
-                <span class="table-count">{{ $lowStockProducts->count() }} productos</span>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0" style="min-width:560px;">
-                    <thead class="table-light">
-                        <tr>
-                            <th class="ps-4">Producto</th>
-                            <th>Categoría</th>
-                            <th class="text-end pe-4">Existencias</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($lowStockProducts as $product)
-                            <tr>
-                                <td class="ps-4 fw-semibold">{{ $product->name }}</td>
-                                <td>{{ $product->category->name ?? 'Sin categoría' }}</td>
-                                <td class="text-end pe-4"><span class="badge-stock-low">{{ $product->stock }} unid.</span></td>
-                            </tr>
-                        @empty
-                            <tr><td colspan="3" class="text-center text-muted py-4">No hay productos con bajo inventario.</td></tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </section>
 
     </div>
 </div>
@@ -691,54 +592,19 @@
     @media (max-width: 1100px) {
         .dash-layout { grid-template-columns: 1fr; }
         .admin-rail { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
-        .overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 700px) {
         .dash-topbar { align-items: flex-start; flex-direction: column; padding: 22px; }
         .dash-layout { gap: 16px; }
         .admin-rail { grid-template-columns: 1fr; }
-        .analytics-grid { grid-template-columns: 1fr; }
         .table-header { padding: 18px; }
         .actions-cell { min-width: 180px; }
     }
-
-    @media (max-width: 480px) {
-        .overview-grid { grid-template-columns: 1fr; }
-    }
 </style>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    const inventoryChart = @json($inventoryChart);
-    const movementChart = @json($movementChart);
-
-    new Chart(document.getElementById('inventory-chart'), {
-        type: 'doughnut',
-        data: {
-            labels: inventoryChart.labels,
-            datasets: [{ data: inventoryChart.values, backgroundColor: ['#0891b2', '#f59e0b', '#e11d48'], borderWidth: 0 }]
-        },
-        options: { maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
-    });
-
-    new Chart(document.getElementById('movement-chart'), {
-        type: 'bar',
-        data: {
-            labels: movementChart.labels,
-            datasets: [
-                { label: 'Entradas', data: movementChart.entries, backgroundColor: '#0891b2', borderRadius: 6 },
-                { label: 'Salidas', data: movementChart.exits, backgroundColor: '#2563eb', borderRadius: 6 }
-            ]
-        },
-        options: {
-            maintainAspectRatio: false,
-            scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
-            plugins: { legend: { position: 'bottom' } }
-        }
-    });
-
     $('.btn-delete').click(function(e) {
         e.preventDefault();
         var form = $(this).closest('form');

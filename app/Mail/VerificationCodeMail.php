@@ -30,7 +30,7 @@ class VerificationCodeMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Tu código de verificación de Inventario',
+            subject: 'Tu código de verificación de ProductosPro',
         );
     }
 

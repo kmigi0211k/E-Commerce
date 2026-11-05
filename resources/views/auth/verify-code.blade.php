@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Verificar Código — Inventario</title>
+    <title>Verificar Código — ProductosPro</title>
 
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -242,7 +242,7 @@
         <div class="brand-icon">
             <i class="bi bi-box-seam-fill"></i>
         </div>
-        <div class="brand-name">Inventario</div>
+        <div class="brand-name">Productos<span>Pro</span></div>
     </a>
 
     <div class="mail-icon-circle">

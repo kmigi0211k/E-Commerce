@@ -8,9 +8,9 @@ use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @OA\Info(
- *     title="Inventario Laravel API",
+ *     title="ProductosPro Laravel API",
  *     version="1.0.0",
- *     description="Documentación de la API del sistema Inventario",
+ *     description="Documentación de la API para el proyecto integrador ProductosPro Laravel (Sprint 3)",
  *     @OA\Contact(
  *         email="soporte@productospro.com"
  *     )

@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <title>Código de Verificación — Inventario</title>
+    <title>Código de Verificación — ProductosPro</title>
     <style>
         body {
             margin: 0;
@@ -93,12 +93,12 @@
 
 <div class="email-container">
     <div class="header">
-        <div class="brand-title">Inventario</div>
+        <div class="brand-title">Productos<span>Pro</span></div>
     </div>
 
     <div class="body-content">
         <h2>Hola, {{ $userName }} 👋</h2>
-        <p>Gracias por unirte a <strong>Inventario</strong>. Para completar tu registro y activar tu cuenta en la plataforma, por favor utiliza el siguiente código de verificación:</p>
+        <p>Gracias por unirte a <strong>ProductosPro</strong>. Para completar tu registro y activar tu cuenta en la plataforma, por favor utiliza el siguiente código de verificación:</p>
 
         <div class="code-box">
             <div class="code-label">Tu Código de Seguridad</div>
@@ -110,7 +110,7 @@
     </div>
 
     <div class="footer">
-        © {{ date('Y') }} Inventario · Sistema de gestión de inventario.<br>
+        © {{ date('Y') }} ProductosPro · Sistema de Comercio y Voluntariado Solidario.<br>
         Este es un mensaje automático de seguridad, por favor no respondas a este correo.
     </div>
 </div>
