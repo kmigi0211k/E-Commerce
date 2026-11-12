@@ -40,22 +40,23 @@ class ProfileController extends Controller
         $person = $user->person;
 
         $request->validate([
-            'user_name' => 'required|string|max:15|unique:users,user_name,' . $user->id,
+            'user_name' => 'required|string|max:15|unique:users,user_name,'.$user->id,
             'names' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:50',
-            'password' => 'nullable|string|min:8|confirmed',
+            'password' => [$user->password_needs_reset ? 'required' : 'nullable', 'string', 'min:8', 'confirmed'],
         ]);
 
         // Update User
         $user->user_name = $request->user_name;
-        
+
         // Update Password if provided
         if ($request->filled('password')) {
             $user->password = \Illuminate\Support\Facades\Hash::make($request->password);
+            $user->password_needs_reset = false;
         }
-        
+
         $user->save();
 
         // Update Person

@@ -15,8 +15,11 @@ class EnsurePasswordIsReset
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check() && Auth::user()->password_needs_reset) {
-            // Si el usuario necesita resetear pero intenta ir a otra página que no sea el formulario de info
-            if (!$request->is('profile/info*') && !$request->is('logout')) {
+            if (! $request->routeIs('profile.info', 'profile.info.update', 'password.update', 'logout')) {
+                if ($request->session()->has('temporary_password')) {
+                    $request->session()->keep('temporary_password');
+                }
+
                 return redirect()->route('profile.info')
                     ->with('warning', 'Por seguridad, debes cambiar tu contraseña antes de continuar.');
             }

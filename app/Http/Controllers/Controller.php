@@ -8,13 +8,15 @@ use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @OA\Info(
- *     title="ProductosPro Laravel API",
+ *     title="Inventario Laravel API",
  *     version="1.0.0",
- *     description="Documentación de la API para el proyecto integrador ProductosPro Laravel (Sprint 3)",
+ *     description="Documentación de la API del sistema Inventario",
+ *
  *     @OA\Contact(
  *         email="soporte@productospro.com"
  *     )
  * )
+ *
  * @OA\Server(
  *     url=L5_SWAGGER_CONST_HOST,
  *     description="Servidor Principal"

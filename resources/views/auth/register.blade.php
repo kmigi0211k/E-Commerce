@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Crear Cuenta — ProductosPro</title>
+    <title>Crear Cuenta — Inventario</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -506,11 +506,11 @@
         <section class="register-card" aria-labelledby="register-title">
 
             <!-- Marca -->
-            <a href="{{ url('/') }}" class="brand-header" aria-label="ProductosPro, página principal">
+            <a href="{{ url('/') }}" class="brand-header" aria-label="Inventario, página principal">
                 <div class="brand-icon-box">
                     <i class="bi bi-cpu-fill" aria-hidden="true"></i>
                 </div>
-                <h1 class="brand-title">Productos<span>Pro</span></h1>
+                <h1 class="brand-title">Inventario</h1>
             </a>
 
             <!-- Encabezado -->

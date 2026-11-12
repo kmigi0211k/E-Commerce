@@ -11,7 +11,7 @@ services:
     plan: free
     envVars:
       - key: APP_NAME
-        value: ProductosPro
+        value: Inventario
       - key: APP_URL
         value: https://proyectointegrador-m084.onrender.com
       - key: APP_ENV

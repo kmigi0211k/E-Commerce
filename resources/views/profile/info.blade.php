@@ -101,15 +101,19 @@
                             </div>
                         </div>
 
-                        <h5 class="account-section-title fw-bold mb-4 border-bottom pb-2">Seguridad (Opcional)</h5>
-                        <p class="text-muted small mb-3">Deja estos campos vacíos si no deseas cambiar tu contraseña.</p>
+                        <h5 class="account-section-title fw-bold mb-4 border-bottom pb-2">
+                            {{ $user->password_needs_reset ? 'Cambiar contraseña temporal' : 'Seguridad (Opcional)' }}
+                        </h5>
+                        <p class="text-muted small mb-3">
+                            {{ $user->password_needs_reset ? 'Debes establecer una nueva contraseña para continuar.' : 'Deja estos campos vacíos si no deseas cambiar tu contraseña.' }}
+                        </p>
 
                         <div class="row g-3 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold">Nueva Contraseña</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light border-end-0 rounded-start-3"><i class="bi bi-shield-lock"></i></span>
-                                    <input type="password" name="password" class="form-control border-start-0 rounded-end-3" placeholder="Mínimo 8 caracteres">
+                                    <input type="password" name="password" class="form-control border-start-0 rounded-end-3" placeholder="Mínimo 8 caracteres" {{ $user->password_needs_reset ? 'required' : '' }}>
                                 </div>
                                 @error('password') <span class="text-danger small">{{ $message }}</span> @enderror
                             </div>
@@ -117,7 +121,7 @@
                                 <label class="form-label small fw-bold">Confirmar Contraseña</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light border-end-0 rounded-start-3"><i class="bi bi-shield-check"></i></span>
-                                    <input type="password" name="password_confirmation" class="form-control border-start-0 rounded-end-3" placeholder="Repite la contraseña">
+                                    <input type="password" name="password_confirmation" class="form-control border-start-0 rounded-end-3" placeholder="Repite la contraseña" {{ $user->password_needs_reset ? 'required' : '' }}>
                                 </div>
                             </div>
                         </div>

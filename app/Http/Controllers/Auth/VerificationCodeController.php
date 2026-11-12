@@ -23,12 +23,12 @@ class VerificationCodeController extends Controller
     public function notice(Request $request): View|RedirectResponse
     {
         $userId = session('verification_user_id');
-        if (!$userId) {
+        if (! $userId) {
             return redirect()->route('login');
         }
 
         $user = User::with('person')->find($userId);
-        if (!$user) {
+        if (! $user) {
             return redirect()->route('login');
         }
 
@@ -51,12 +51,12 @@ class VerificationCodeController extends Controller
         ]);
 
         $userId = session('verification_user_id');
-        if (!$userId) {
+        if (! $userId) {
             return redirect()->route('login')->with('error', 'La sesión de verificación ha expirado. Por favor inicia sesión.');
         }
 
         $user = User::find($userId);
-        if (!$user) {
+        if (! $user) {
             return redirect()->route('login');
         }
 
@@ -65,7 +65,7 @@ class VerificationCodeController extends Controller
             && now()->lt($user->verification_expires_at)
             && hash_equals((string) $user->verification_code, $request->code);
 
-        if (!$codeIsValid) {
+        if (! $codeIsValid) {
             return back()->withInput()->with('error', 'El código de verificación es incorrecto o ha expirado. Solicita uno nuevo.');
         }
 
@@ -80,7 +80,7 @@ class VerificationCodeController extends Controller
         // Iniciar sesión
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME)->with('success', '¡Cuenta verificada exitosamente! Bienvenido a ProductosPro.');
+        return redirect(RouteServiceProvider::HOME)->with('success', '¡Cuenta verificada exitosamente! Bienvenido a Inventario.');
     }
 
     /**
@@ -89,22 +89,22 @@ class VerificationCodeController extends Controller
     public function resend(Request $request): RedirectResponse
     {
         $userId = session('verification_user_id');
-        if (!$userId) {
+        if (! $userId) {
             return redirect()->route('login');
         }
 
         $user = User::with('person')->find($userId);
-        if (!$user) {
+        if (! $user) {
             return redirect()->route('login');
         }
 
         $email = $user->person?->email ?? session('verification_email');
-        if (!$email) {
+        if (! $email) {
             return back()->with('error', 'No se encontró el correo asociado a esta cuenta.');
         }
 
-        if (!Schema::hasColumn('users', 'verification_code')
-            || !Schema::hasColumn('users', 'verification_expires_at')) {
+        if (! Schema::hasColumn('users', 'verification_code')
+            || ! Schema::hasColumn('users', 'verification_expires_at')) {
             Log::error('No se puede reenviar el código porque faltan columnas de verificación de correo.');
 
             return back()->with('error', 'No fue posible reenviar el código. Inténtalo más tarde.');
