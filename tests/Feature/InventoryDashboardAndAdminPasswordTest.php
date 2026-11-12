@@ -11,6 +11,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
 class InventoryDashboardAndAdminPasswordTest extends TestCase
@@ -54,6 +55,16 @@ class InventoryDashboardAndAdminPasswordTest extends TestCase
             ->assertOk()
             ->assertSee('<title>Inventario | Sistema de Inventario</title>', false)
             ->assertSee('>Inventario</span>', false);
+    }
+
+    public function test_category_migration_is_safe_when_category_schema_already_exists(): void
+    {
+        $migration = require database_path('migrations/2026_11_04_000000_add_categories_to_products_table.php');
+
+        $migration->up();
+
+        $this->assertTrue(Schema::hasTable('categories'));
+        $this->assertTrue(Schema::hasColumn('products', 'category_id'));
     }
 
     public function test_administrator_can_manage_categories_without_deleting_associated_products(): void
